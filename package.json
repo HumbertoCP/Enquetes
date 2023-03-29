@@ -15,7 +15,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@shelf/jest-mongodb": "^4.1.7",
     "@types/jest": "^29.4.4",
+    "@types/mongodb": "^4.0.7",
     "@types/node": "^13.1.6",
     "@types/validator": "^13.7.14",
     "@typescript-eslint/eslint-plugin": "^2.16.0",
