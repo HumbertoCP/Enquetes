@@ -11,6 +11,17 @@ export const MongoHelper = {
   },
   getCollection (name: string): Collection {
     return this.client.db().collection(name)
-  }
+  },
 
+  map: async (collection: any): Promise<any> => {
+    const Collection = MongoHelper.getCollection('accounts')
+
+    const { insertedId: id } = collection
+    const collectionById = await Collection.findOne({ _id: id })
+    const { _id, ...collectionWithoutId } = collectionById
+
+    const result = Object.assign({}, collectionWithoutId, { id: _id.toHexString() })
+
+    return result
+  }
 }
