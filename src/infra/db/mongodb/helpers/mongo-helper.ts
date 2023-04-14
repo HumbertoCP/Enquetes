@@ -10,14 +10,18 @@ export const MongoHelper = {
       { useUnifiedTopology: true })
   },
   async disconnect (): Promise<void> {
-    await this.client.close()
+    await this.client?.close()
+    this.client = null
   },
-  getCollection (name: string): Collection {
+  async getCollection (name: string): Collection {
+    if (!this.client) {
+      await this.connect(this.uri)
+    }
     return this.client.db().collection(name)
   },
 
   map: async (collection: any): Promise<any> => {
-    const Collection = MongoHelper.getCollection('accounts')
+    const Collection = await MongoHelper.getCollection('accounts')
 
     const { insertedId: id } = collection
     const collectionById = await Collection.findOne({ _id: id })
